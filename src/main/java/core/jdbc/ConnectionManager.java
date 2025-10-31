@@ -26,7 +26,7 @@ public class ConnectionManager {
 
     public static Connection getConnection() {
         try {
-            return getDataSource().getConnection();
+            return getDataSource().getConnection();     // connection을 받아옴
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

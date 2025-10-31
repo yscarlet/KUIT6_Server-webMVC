@@ -1,24 +1,19 @@
 package jwp.controller;
 
-import core.db.MemoryUserRepository;
 import core.mvc.Controller;
-import jwp.dao.UserDao;
 import jwp.util.UserSessionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ListUserController implements Controller {
-    UserDao userDao = new UserDao();
+public class CreateQuestionFormController implements Controller {
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         HttpSession session = req.getSession();
         if (UserSessionUtils.isLogined(session)) {
-//            req.setAttribute("users", MemoryUserRepository.getInstance().findAll());
-            req.setAttribute("users", userDao.findAll());
-            return "/user/list.jsp";
+            return "/qna/form.jsp";
         }
         return "redirect:/user/loginForm";
     }
