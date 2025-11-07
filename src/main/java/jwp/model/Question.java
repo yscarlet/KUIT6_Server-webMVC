@@ -1,11 +1,20 @@
 package jwp.model;
 
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "QUESTIONS")
+@NoArgsConstructor
+@Setter
 public class Question {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)     // Id 자동 할당
     private int questionId;
     private String writer;
     private String title;
@@ -14,6 +23,7 @@ public class Question {
     private int countOfAnswer;
 
     public Question(int questionId, String writer, String title, String contents, Date createdDate, int countOfAnswer) {
+        System.out.println("사용된 생성자1");
         this.questionId = questionId;
         this.writer = writer;
         this.title = title;
@@ -22,13 +32,28 @@ public class Question {
         this.countOfAnswer = countOfAnswer;
     }
 
+    public Question(String writer, String title, String contents) {
+        System.out.println("사용된 생성자2");
+        this.writer = writer;
+        this.title = title;
+        this.contents = contents;
+        this.createdDate = Date.valueOf(LocalDate.now());
+        this.countOfAnswer = 0;
+    }
+
+    // Id 자동 할당
     public Question(String writer, String title, String contents, int countOfAnswer) {
-        this.questionId = 0;
+        System.out.println("사용된 생성자3");
         this.writer = writer;
         this.title = title;
         this.contents = contents;
         this.createdDate = Date.valueOf(LocalDate.now());
         this.countOfAnswer = countOfAnswer;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = Date.valueOf(LocalDate.now());
     }
 
     public int getQuestionId() {
